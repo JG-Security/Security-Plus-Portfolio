@@ -19,4 +19,14 @@ This PowerShell script analyzes the Windows Security Event Log for signs of brut
 2. Run: `.\EventLogAnalyzer.ps1 -Hours 24 -Threshold 10`
 
 ## Sample Output
-(See screenshots in this folder once added)
+
+Here are examples of the script running on a test system:
+
+### Default Run (24-hour window with failed logons found)
+![Default run showing found events](Log%20Analyzer%20default.png)
+
+### 2-Hour Window (focused recent activity)
+![2-hour window output](Log%20Analyzer%202%20hour%20window.png)
+
+### No Failed Logons Found (clean system or outside time range)
+![No failed logon events message](Log%20Analyzer%20No%20Logon%20events.png)
