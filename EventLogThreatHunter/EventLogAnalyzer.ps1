@@ -17,7 +17,7 @@ $FailedLogons = Get-WinEvent -FilterHashtable @{
 } -ErrorAction SilentlyContinue
 
 if ($FailedLogons) {
-    Write-Host "Found $(FailedLogons.Count) failed logon events." -ForegroundColor Green
+    Write-Host "Found $($FailedLogons.Count) failed logon events." -ForegroundColor Green
 } else {
     Write-Host "No Failed logon events found in the last $Hours hours." -ForegroundColor Magenta
     exit
