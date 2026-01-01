@@ -30,3 +30,20 @@ Here are examples of the script running on a test system:
 
 ### No Failed Logons Found (clean system or outside time range)
 ![No failed logon events message](Log%20Analyzer%20No%20Logon%20events.png)
+
+## Final Results
+
+The completed script now:
+- Extracts target username and source IP/workstation from Event ID 4625
+- Groups Failed attempts by attacker
+- Flags sources exceeding the threshold set
+- Displays a summary table
+- Exports a timestamped CSV report
+- Issues a clear alert for suspicious activity
+
+### Example Output in a test environment
+![Full summary table and alert](Event_Log_Analyzer_Final.png)
+
+![Exported CSV report](Event_Log_Threat_Analyzer_CSV.png)
+
+This tool simulates a basic SOC brute-force detection workflow for Event ID 4625 running through PowerShell 7
