@@ -36,7 +36,7 @@ In this example:
 
 ### Eample with 8 total checks, including password Complexity/Length, account Lockout Threshold, AutoPlay/AutoRun, and SMBv1 protol status used in EternalBlue/WannaCry
 
-![8 Total Hardening checks output](hardening_8_Checks)
+![8 Total Hardening checks output](hardening_8_Checks.png)
 
 In this example we have added
 - **Password Complexity**: Warning (Hello-Only or Local PIN, typical on home machines)
