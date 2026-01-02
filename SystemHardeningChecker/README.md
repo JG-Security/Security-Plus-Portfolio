@@ -34,6 +34,13 @@ In this example:
 - **Guest Account**: Secure (Disabled)
 - **Windows Firewall**: Secure (Enabled on all profiles)
 
-Results will vary depending on system config and group policy settings.
+### Eample with 8 total checks, including password Complexity/Length, account Lockout Threshold, AutoPlay/AutoRun, and SMBv1 protol status used in EternalBlue/WannaCry
 
-Additional checks (password policy, account lockouts, SMBv1, ect...) coming soon, thanks for checking it out!
+![8 Total Hardening checks output](hardening_8_Checks)
+
+In this example we have added
+- **Password Complexity**: Warning (Hello-Only or Local PIN, typical on home machines)
+- **Minimum Password Length**: Insecure Again for PIN only this shows as 0 characters
+- **Account Lockout Threshold**: Secure (Brute-Force mitigation)
+- **AutoPlay/AutoRun check**: Warning (Common infeciton vector)
+- **SMBv1 Protocol check**: Secure (Prevents EternalBlue/WannaCry exploitation)
