@@ -19,3 +19,21 @@ This PowerShell script audits common Windows security settings against best-prac
 Open PowerShell **as Administrator** and run:
 ```powershell
 .\SystemHardeningChecker.ps1
+```
+
+## Sample Output
+
+The script performs multiple security checks and displays the results in a table with status, curent value, recommended setting(s), and notes.
+
+### Example on a Windows 11 system
+
+![First 3 hardening checks output](hardening_first_3_checks.png)
+
+In this example:
+- **User Account Control (UAC)**: Secure (Enabled)
+- **Guest Account**: Secure (Disabled)
+- **Windows Firewall**: Secure (Enabled on all profiles)
+
+Results will vary depending on system config and group policy settings.
+
+Additional checks (password policy, account lockouts, SMBv1, ect...) coming soon, thanks for checking it out!
