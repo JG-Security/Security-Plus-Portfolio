@@ -34,7 +34,7 @@ function Add-CheckResult {
 $uacKey = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
 $uacValue = Get-ItemProperty -Path $uacKey -Name "EnableLUA" -ErrorAction SilentlyContinue
 if ($uacValue.EnableLUA -eq 1) {
-    Add-CheckResult -CheckName "User Accoutn Control (UAC)" -Status "Secure" -CurrentValue "Enabled" -Recommended "Enabled" -Notes "Prevents unauthorized elevation"
+    Add-CheckResult -CheckName "User Account Control (UAC)" -Status "Secure" -CurrentValue "Enabled" -Recommended "Enabled" -Notes "Prevents unauthorized elevation"
 } else {
     Add-CheckResult -CheckName "User Account Control (UAC)" -Status "Insecure" -CurrentValue "Disabled" -Recommended "Enabled" -Notes "Critical hardening feature"
 }
