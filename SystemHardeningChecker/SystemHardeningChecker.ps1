@@ -18,8 +18,8 @@ function Add-CheckResult {
     )
 
 
-    # Add a customer object to the $Results array
-    $Results += [pscustomobject]@{
+    # Add a custom object to the $Results array
+    $script:Results += [pscustomobject]@{
         CheckName       = $CheckName
         Status          = $Status
         CurrentValue    = $CurrentValue
@@ -28,6 +28,40 @@ function Add-CheckResult {
     }
 }
 
-# Placeholder message until we add real checks
-Write-Host "`nNo checks added yet - script framework ready!" -ForegroundColor Magenta
-Write-Host "Results array has $($Results.Count) items." -ForegroundColor Gray
+# ============ HARDENING CHECKS START HERE ============
+
+# Check 1: If User Account Control (UAC) Enabled
+$uacKey = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
+$uacValue = Get-ItemProperty -Path $uacKey -Name "EnableLUA" -ErrorAction SilentlyContinue
+if ($uacValue.EnableLUA -eq 1) {
+    Add-CheckResult -CheckName "User Accoutn Control (UAC)" -Status "Secure" -CurrentValue "Enabled" -Recommended "Enabled" -Notes "Prevents unauthorized elevation"
+} else {
+    Add-CheckResult -CheckName "User Account Control (UAC)" -Status "Insecure" -CurrentValue "Disabled" -Recommended "Enabled" -Notes "Critical hardening feature"
+}
+
+# Check 2: If Guest Account is Disabled
+$guest = Get-LocalUser -Name "Guest" -ErrorAction SilentlyContinue
+if ($guest.Enabled -eq $false) {
+    Add-CheckResult -CheckName "Guest Account Status" -Status "Secure" -CurrentValue "Disabled" -Recommended "Disabled" -Notes "Prevents anonymous logon"
+} else {
+    Add-CheckResult -CheckName "Guest Account Status" -Status "Insecure" -CurrentValue "Enabled" -Recommended "Disabled" -Notes "High-risk legacy account"
+}
+
+# Check 3: Windows Firewall Enabled for ALL Profiles
+$fwProfiles = Get-NetFirewallProfile
+$allEnabled = $true
+foreach ($fwProfile in $fwProfiles) {
+    if ($fwProfile.Enabled -eq $false) { $allEnabled = $false }
+}
+if ($allEnabled) {
+    Add-CheckResult -CheckName "Windows Firewall" -Status "Secure" -CurrentValue "Enable (All Profiles)" -Recommended "Enabled" -Notes "Blocks unauthorized inbound traffic"
+} else {
+    Add-CheckResult -CheckName "Windows Firewall" -Status "Warning" -CurrentValue "Disabled on one or more profiles" -Recommended "Enabled" -Notes "Check Domain/Private/Public"
+
+}
+
+# ============ HARDENING CHECKS END (more coming) ============
+
+# Final output
+Write-Host "`nHardening Audit Complete - $($Results.Count) checks performed`n" -ForegroundColor Cyan
+$Results | Format-Table -AutoSize
