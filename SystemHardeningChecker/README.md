@@ -23,24 +23,11 @@ Open PowerShell **as Administrator** and run:
 
 ## Sample Output
 
-The script performs multiple security checks and displays the results in a table with status, curent value, recommended setting(s), and notes.
+This script displays color-coded results and calculates the overall hardening score.
 
-### Example on a Windows 11 system
+![Hardening score and color-coded output](hardening_final-score_with_colors.png)
 
-![First 3 hardening checks output](hardening_first_3_checks.png)
-
-In this example:
-- **User Account Control (UAC)**: Secure (Enabled)
-- **Guest Account**: Secure (Disabled)
-- **Windows Firewall**: Secure (Enabled on all profiles)
-
-### Eample with 8 total checks, including password Complexity/Length, account Lockout Threshold, AutoPlay/AutoRun, and SMBv1 protol status used in EternalBlue/WannaCry
-
-![8 Total Hardening checks output](hardening_8_Checks.png)
-
-In this example we have added
-- **Password Complexity**: Warning (Hello-Only or Local PIN, typical on home machines)
-- **Minimum Password Length**: Insecure Again for PIN only this shows as 0 characters
-- **Account Lockout Threshold**: Secure (Brute-Force mitigation)
-- **AutoPlay/AutoRun check**: Warning (Common infeciton vector)
-- **SMBv1 Protocol check**: Secure (Prevents EternalBlue/WannaCry exploitation)
+- Secure checks: Green (2 points)
+- Warning checks: Yellow (1 point)
+- Insecure checks: Red (0 points)
+- Final percentage and rating for risk assessment

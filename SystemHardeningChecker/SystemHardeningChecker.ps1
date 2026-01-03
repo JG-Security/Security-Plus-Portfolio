@@ -129,3 +129,46 @@ if ($smbv1 -and $smbv1.State -eq "Disabled") {
 # Final output
 Write-Host "`nHardening Audit Complete - $($Results.Count) checks performed`n" -ForegroundColor Cyan
 $Results | Format-Table -AutoSize
+
+# ============ HARDENING SCORE & COLOR OUTPUT ============
+
+# Calculate score: Secure = 2 points, Warning = 1 point, Insecure = 0 points
+$TotalPoints = 0
+foreach ($result in $Results) {
+    switch ($result.Status) {
+        "Secure"    { $TotalPoints += 2 }
+        "Warning"   { $TotalPoints += 1 }
+        "Insecure"  { $TotalPoints += 0 }
+    }
+}
+
+$MaxPoints = $Results.Count * 2
+$Score = [math]::Round(($TotalPoints / $MaxPoints) * 100)
+
+# Color-coded row output
+Write-Host "`nHardening Results (Color-Coded):`n" -ForegroundColor Cyan
+foreach ($result in $Results) {
+    switch ($result.Status) {
+        "Secure"    { $color = "Green" }
+        "Warning"   { $color = "Yellow" }
+        "Insecure"  { $color = "Red" }
+        default     { $color = "White" }
+    }
+    Write-Host "$($result.CheckName.PadRight(35))" -NoNewline
+    Write-Host "$($result.Status.PadRight(12))" -ForegroundColor $color -NoNewline
+    Write-Host "$($result.CurrentValue.PadRight(25))$($result.Recommended.PadRight(15))$($result.Notes)"
+}
+
+# Final score summary
+Write-Host "`n=== HARDENING SCORE ===`n" -ForegroundColor Cyan
+Write-Host "Total checks: $($Results.Count)" -ForegroundColor White
+Write-Host ("Score: {0}% ({1} / {2} points)" -f $Score, $TotalPoints, $MaxPoints) -ForegroundColor White
+
+switch ($Score) {
+    { $_ -ge 90 } { $rating = "Excellent"; $ratingColor = "Green" }
+    { $_ -ge 70 } { $rating = "Good"; $ratingColor = "Green" }
+    { $_ -ge 50 } { $rating = "Fair"; $ratingColor = "Yellow" }
+    default       { $rating = "Needs Improvement"; $ratingColor = "Red" }
+}
+
+Write-Host ("Overall Rating: {0} ({1}%)" -f $rating, $Score) -ForegroundColor $ratingColor
