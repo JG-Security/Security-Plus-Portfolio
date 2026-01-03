@@ -25,7 +25,7 @@ Open PowerShell **as Administrator** and run:
 
 This script displays color-coded results and calculates the overall hardening score.
 
-![Hardening score and color-coded output](hardening_final-score_with_colors.png)
+![Hardening score and color-coded output](hardening_final_score_with_colors.png)
 
 - Secure checks: Green (2 points)
 - Warning checks: Yellow (1 point)
